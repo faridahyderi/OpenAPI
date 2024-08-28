@@ -26,42 +26,47 @@ footer.append(copyright);
 
 
 
-/*Creating fetch, handle JSON data, Handling errors*/
-fetch('https://api.github.com/users/faridahyderi/repos')
-.then(res => {
-  return res.text();
-})
-.then (text => {
-      const data=JSON.parse(text);
-      
-     
-         data.forEach(repo =>{
-          const repositories=repo.name;
-          console.log(repositories);
-     
- })
 
-  //Display Repositories in list
-const projectSection = document.getElementById('Projects');
-const projectList = projectSection.querySelector('ul');
-for(let i=0 ;i< data.length ; i++ )
-  {
-   
-    const projectli = document.createElement('li');
-    projectli.innerHTML = data[i].name;
-    projectList.appendChild(projectli);
-   
-  }
 
- })
-.catch(error => {
-  console.log(error)});
-
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m')
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&forecast_days=1&models=gfs_seamless&timezone=America/New_York')
   .then (response =>{
     return response.json();
   })
   .then (data =>{
-    console.log(data);
-  })
+    //creating a var to point to element where max temp to be displayed
+    const temp = document.getElementById('maxtemp');
+    temp.innerHTML=`Maximum tempearture is ${data.daily.temperature_2m_max}`;
+
+    //creating a var to point to element where min temp to be displayed
+    const temp1 = document.getElementById('mintemp');
+    temp1.innerHTML = `Minimum tempearture is ${data.daily.temperature_2m_min}`;
+    })
+    .catch(erroe => {
+      console.log(error)
+    });
+
+    const input = document.getElementById('inputlat');
+    const input1 = document.getElementById('inputlong');
+    const button = document.getElementById('sub');
+    button.addEventListener('click',event =>{
+      event.preventDefault();
+    
+    const apiURL =  `https://api.open-meteo.com/v1/forecast?latitude=${input.value}&longitude=${input1.value}&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&forecast_days=1&models=gfs_seamless&timezone=America/New_York`;
+    console.log(apiURL);
+    fetch(apiURL)
+    .then (response1 => {
+       return response1.json();
+    })
+    .then (apidata =>{
+      const temp = document.getElementById('maxtemp');
+      temp.innerHTML=`Maximum tempearture for new latitude and longitude is ${apidata.daily.temperature_2m_max}`;
   
+      //creating a var to point to element where min temp to be displayed
+      const temp1 = document.getElementById('mintemp');
+      temp1.innerHTML = `Minimum tempearture for new latitude and longitude is is ${apidata.daily.temperature_2m_min}`;
+      console.log(apidata);
+    })
+    .catch(error=>{
+      console.log(error)
+    });
+    });
