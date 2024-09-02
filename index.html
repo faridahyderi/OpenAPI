@@ -7,34 +7,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
   </head>
-  <body>
-    <h1> About </h1>
-    <p> This webpage uses the data from an open weather API and displays the
-       Maximum and minimum daily air temperature at 2 meters above ground for given 
-       latitude and longitude for America/NewYork timezone.
+  <header>
+    <nav class="navigation">
+      <p>
+        This page can be used to see the current Weather Condition for a particular
+         latitude, longitude and also to check the Air Quality.
+      </p> <br></br>
+      <ul id="navlinks">
+        <li id="weather-forecast"><a href="#weather-forecast" onclick="weathercheck(this);">Weather Forecast</li> <br>
+          
+        <li id="air-quality"><a href="#air-quality" onclick="checkairquality(this);">Air Quality</a></li>
+       </ul>
+    </nav>
+  </header>
+
+  <body background="images/clouds.jpg" >
+   <section id="aboutweather" class="weather-forecast" >
+    <h1 > About </h1>
+    <p > This webpage uses the data from an open weather API whose endpoint accepts a 
+      geographical WGS84 coordinate that is it uses latitude and longitude coordinates to 
+      specify a location on the surface of the earth.<br><br>
+
+       
     </p>
-    <p >
+    <br></br>
+    <p id="message">
       Temperature for Timezone America/New_york is : <br></br>
     </p>
+    
 
     <p id = "maxtemp">
 
     </p>
+    
     <p id = "mintemp">
       
     </p>
+    <br></br>
+    <p id = "errormessage">
+
+    </p>
    <br></br>
    
-    <section>
       <label>Enter Latitude: </label>
-      <input type="text" id= "inputlat" required ="true"> <br></br>
+      <input type="number" id= "inputlat" required ="true"> <br></br>
 
       <label>Enter longitude : </label>
-      <input type="text" id= "inputlong" required ="true"> <br></br>
+      <input type="number" id= "inputlong" required ="true"> <br></br>
 
+      <label>Enter Tempearture Unit :</label>
+      <select name="temperatureunit" id="temperatureunit" required = "true" >
+        <option value="fahrenheit">Fahrenheit</option>
+        <option value="celsius">Celsius</option>
+        </select><br></br>
 
      <button type="submit" id="sub"> submit</button>
     </section>
+
+    <section id="aboutairquality" class="air-quality">
+      <h1 > About </h1>
+      <p > The United States Air Quality Index (AQI) ranges from 0-50 (good), 51-100 (moderate), 
+        101-150 (unhealthy for sensitive groups), 151-200 (unhealthy), 201-300 (very unhealthy)
+         and 301-500 (hazardous).
+      </p>
+      <br></br>
+      
+      <p id = "aqi">
+
+      </p>
+      <p id = "errormessage1">
+  
+      </p>
+     <br></br>
+     
+        <label>Enter Latitude: </label>
+        <input type="number" id= "inputlat1" required ="true"> <br></br>
+  
+        <label>Enter longitude : </label>
+        <input type="number" id= "inputlong1" required ="true"> <br></br>
+  
+       <button type="submit" id="sub1"> submit</button>
+      </section>
     
    
     <script src = "js/index.js" ></script>

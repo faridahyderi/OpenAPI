@@ -1,6 +1,11 @@
-body
+#navlinks{
+    list-style-type: none; 
+    padding-top: 50px;   
+  }
+     body
 {
     background-color: beige; 
+    background-size: 100vw 100vh;
     color: brown;
 }
 
@@ -17,7 +22,21 @@ body
        }
 
        h1{
+        margin-top:100px;
         font-size: 2em;
         font-weight: 200;
         font-style: normal;
        }
+
+       #about{
+        font-size: 1.2em;
+        font-weight: 100;
+        margin-top:50px;
+       }
+
+       p{
+        font-size: 1.2em;
+        font-weight: 100;
+       }
+
+      

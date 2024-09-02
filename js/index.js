@@ -1,3 +1,4 @@
+
 /*n your index.js file, using DOM manipulation, add a 'footer' child element to your index.html.*/
 
 const footer1 = document.createElement('footer');
@@ -23,50 +24,142 @@ copyright.innerHTML = `Farida Hyderi ${thisYear} \u{00A9}`;
 
 /*Append the copyright element to the footer using "DOM Manipulation"*/
 footer.append(copyright);
-
-
-
-
+  
+//Hidding both sections
+      const temp = document.getElementById('aboutweather');
+      temp.style.visibility = 'hidden';
+      const temp1 = document.getElementById('aboutairquality');
+      temp1.style.visibility = 'hidden';
+   
+//This function gets called when the user clicks on whether forecast link
+function weathercheck(value)
+{ 
+  
+  //Making the weather section visible
+  const abouttemp = document.getElementById('aboutweather');
+  abouttemp.style.visibility = 'visible';
+  
 
   fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&forecast_days=1&models=gfs_seamless&timezone=America/New_York')
   .then (response =>{
-    return response.json();
+        return response.json();
   })
   .then (data =>{
     //creating a var to point to element where max temp to be displayed
     const temp = document.getElementById('maxtemp');
-    temp.innerHTML=`Maximum tempearture is ${data.daily.temperature_2m_max}`;
+    temp.innerHTML=`<b> Maximum tempearture for 52.52 latitude and 13.41 longitude is: </b> : ${data.daily.temperature_2m_max}\u{00B0}F`;
 
     //creating a var to point to element where min temp to be displayed
     const temp1 = document.getElementById('mintemp');
-    temp1.innerHTML = `Minimum tempearture is ${data.daily.temperature_2m_min}`;
+    temp1.innerHTML = `<strong> Minimum tempearture for 52.52 latitude and 13.41 longitude is </strong> : ${data.daily.temperature_2m_min}\u{00B0}F`;
     })
-    .catch(erroe => {
+    .catch(error => {
       console.log(error)
     });
-
+    
+    //Getting the latitude and longitude and temperature unit inputs from the user
     const input = document.getElementById('inputlat');
     const input1 = document.getElementById('inputlong');
     const button = document.getElementById('sub');
+    const tempunit = document.getElementById('temperatureunit');
+   
+    //Adding the event click to the button Submit
     button.addEventListener('click',event =>{
       event.preventDefault();
     
-    const apiURL =  `https://api.open-meteo.com/v1/forecast?latitude=${input.value}&longitude=${input1.value}&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&forecast_days=1&models=gfs_seamless&timezone=America/New_York`;
+    // creating URL using the inputs received  
+    const apiURL =  `https://api.open-meteo.com/v1/forecast?latitude=${input.value}&longitude=${input1.value}&daily=temperature_2m_max,temperature_2m_min&temperature_unit=${tempunit.value}&forecast_days=1&models=gfs_seamless&timezone=America/New_York`;
     console.log(apiURL);
+
     fetch(apiURL)
     .then (response1 => {
        return response1.json();
     })
     .then (apidata =>{
+      //creating a var to point to element where max temp to be displayed
       const temp = document.getElementById('maxtemp');
-      temp.innerHTML=`Maximum tempearture for new latitude and longitude is ${apidata.daily.temperature_2m_max}`;
+      temp.innerHTML=`<strong> Maximum tempearture for ${apidata.latitude} latitude and ${apidata.longitude} longitude is </strong> :${apidata.daily.temperature_2m_max}${apidata.daily_units.temperature_2m_max}`;
   
       //creating a var to point to element where min temp to be displayed
       const temp1 = document.getElementById('mintemp');
-      temp1.innerHTML = `Minimum tempearture for new latitude and longitude is is ${apidata.daily.temperature_2m_min}`;
+      temp1.innerHTML = `<strong> Minimum tempearture for ${apidata.latitude} latitude and ${apidata.longitude} longitude is </strong> :${apidata.daily.temperature_2m_min}${apidata.daily_units.temperature_2m_min}`;
+
       console.log(apidata);
     })
     .catch(error=>{
+      console.log(error);
+      const temp = document.getElementById('maxtemp');
+      const temp1 = document.getElementById('mintemp');
+      const temp3 = document.getElementById('message');
+
+      //Not displaying the maximum and minimum tempearature
+      temp.style.display = "none";
+      temp1.style.display = "none";
+      temp3.style.display= "none";
+
+      //creating an variable to point where error message needs to be displayed
+      const errmsg = document.getElementById("errormessage");
+      errmsg.innerHTML = `<strong>ERROR:</strong>Enter a valid Floating point number for latitude and longitude`;
+    });
+   });
+  }
+
+  //This function is called when Air Quality link is clicked
+  function checkairquality()
+  {
+    //Making the air Quality section visible
+    const abouttemp = document.getElementById('aboutairquality');
+    abouttemp.style.visibility = 'visible';
+
+    //calling fetch with default latitude and longitude
+    fetch('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=52.52&longitude=13.41&current=us_aqi&forecast_days=1')
+  .then (response =>{
+        return response.json();
+  })
+  .then (data =>{
+    //creating a variable to point where the Air Quality is to be displayed
+    const aqi = document.getElementById('aqi');
+      aqi.innerHTML = `<strong> Air Quality Index for 52.52 latitude and 13.41 longitude is :</strong>${data.current.us_aqi}`;
+    })
+    .catch(error => {
       console.log(error)
     });
-    });
+    
+    //Getting the latitude and longitude inputs from the user
+    const input = document.getElementById('inputlat1');
+    const input1 = document.getElementById('inputlong1');
+    const button = document.getElementById('sub1');
+
+    //Adding a click event to the submit button
+    button.addEventListener('click',event =>{
+      event.preventDefault();
+    
+     //creating the URL based on user inputs 
+    const apiURL =  `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.value}&longitude=${input1.value}&current=us_aqi&forecast_days=1`;
+    console.log(apiURL);
+
+    //Fetching the URL
+    fetch(apiURL)
+    .then (response1 => {
+       return response1.json();
+    })
+    .then (apidata =>{
+      //creating a variable to point where the Air Quality is to be displayed
+      const aqi = document.getElementById('aqi');
+      aqi.innerHTML = `<strong> Air Quality Index for ${apidata.latitude} latitude and ${apidata.longitude} longitude is :</strong>${apidata.current.us_aqi}`;
+
+      console.log(apidata);
+    })
+    .catch(error=>{
+      console.log(error);
+
+      //creating a variable to point where AQI is to be displayed
+      const aqi = document.getElementById('aqi');
+      aqi.style.display = 'none';
+
+      //Creating a variable to [oint where the error message needs to be displayed
+      const errmsg = document.getElementById("errormessage1");
+      errmsg.innerHTML = `<strong>ERROR:</strong>Enter a valid Floating point number for latitude and longitude`;
+    })
+  });
+  }
