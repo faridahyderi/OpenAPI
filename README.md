@@ -1,6 +1,7 @@
 # OpenAPI
 
 [My Open API Project](https://github.com/faridahyderi/OpenAPI)
+
 Steps to view this Project
   1. clone the repository
   2. Open the index.html file in the browser.
