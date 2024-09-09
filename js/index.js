@@ -26,18 +26,18 @@ copyright.innerHTML = `Farida Hyderi ${thisYear} \u{00A9}`;
 footer.append(copyright);
   
 //Hidding both sections
-      const temp = document.getElementById('aboutweather');
-      temp.style.visibility = 'hidden';
-      const temp1 = document.getElementById('aboutairquality');
-      temp1.style.visibility = 'hidden';
+      const weather_section = document.getElementById('aboutweather');
+      weather_section.style.visibility = 'hidden';
+      const aboutairquality_section = document.getElementById('aboutairquality');
+      aboutairquality_section.style.visibility = 'hidden';
    
 //This function gets called when the user clicks on whether forecast link
 function weathercheck(value)
 { 
   
   //Making the weather section visible
-  const abouttemp = document.getElementById('aboutweather');
-  abouttemp.style.visibility = 'visible';
+  const about_weather = document.getElementById('aboutweather');
+  about_weather.style.visibility = 'visible';
   
 
   fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&forecast_days=1&models=gfs_seamless&timezone=America/New_York')
@@ -47,11 +47,11 @@ function weathercheck(value)
   .then (data =>{
     //creating a var to point to element where max temp to be displayed
     const temp = document.getElementById('maxtemp');
-    temp.innerHTML=`<b> Maximum tempearture for 52.52 latitude and 13.41 longitude is: </b> : ${data.daily.temperature_2m_max}\u{00B0}F`;
+    temp.innerHTML=`<b> Maximum temperature for 52.52 latitude and 13.41 longitude is </b> : ${data.daily.temperature_2m_max}\u{00B0}F`;
 
     //creating a var to point to element where min temp to be displayed
     const temp1 = document.getElementById('mintemp');
-    temp1.innerHTML = `<strong> Minimum tempearture for 52.52 latitude and 13.41 longitude is </strong> : ${data.daily.temperature_2m_min}\u{00B0}F`;
+    temp1.innerHTML = `<strong> Minimum temperature for 52.52 latitude and 13.41 longitude is </strong> : ${data.daily.temperature_2m_min}\u{00B0}F`;
     })
     .catch(error => {
       console.log(error)
@@ -77,12 +77,12 @@ function weathercheck(value)
     })
     .then (apidata =>{
       //creating a var to point to element where max temp to be displayed
-      const temp = document.getElementById('maxtemp');
-      temp.innerHTML=`<strong> Maximum tempearture for ${apidata.latitude} latitude and ${apidata.longitude} longitude is </strong> :${apidata.daily.temperature_2m_max}${apidata.daily_units.temperature_2m_max}`;
+      const max_temp = document.getElementById('maxtemp');
+      max_temp.innerHTML=`<strong> Maximum temperature for ${apidata.latitude} latitude and ${apidata.longitude} longitude is </strong> :${apidata.daily.temperature_2m_max}${apidata.daily_units.temperature_2m_max}`;
   
       //creating a var to point to element where min temp to be displayed
-      const temp1 = document.getElementById('mintemp');
-      temp1.innerHTML = `<strong> Minimum tempearture for ${apidata.latitude} latitude and ${apidata.longitude} longitude is </strong> :${apidata.daily.temperature_2m_min}${apidata.daily_units.temperature_2m_min}`;
+      const min_temp = document.getElementById('mintemp');
+      min_temp.innerHTML = `<strong> Minimum temperature for ${apidata.latitude} latitude and ${apidata.longitude} longitude is </strong> :${apidata.daily.temperature_2m_min}${apidata.daily_units.temperature_2m_min}`;
 
       console.log(apidata);
     })
@@ -92,7 +92,7 @@ function weathercheck(value)
       const temp1 = document.getElementById('mintemp');
       const temp3 = document.getElementById('message');
 
-      //Not displaying the maximum and minimum tempearature
+      //Not displaying the maximum and minimum temperature
       temp.style.display = "none";
       temp1.style.display = "none";
       temp3.style.display= "none";
@@ -108,8 +108,8 @@ function weathercheck(value)
   function checkairquality()
   {
     //Making the air Quality section visible
-    const abouttemp = document.getElementById('aboutairquality');
-    abouttemp.style.visibility = 'visible';
+    const about_air = document.getElementById('aboutairquality');
+    about_air.style.visibility = 'visible';
 
     //calling fetch with default latitude and longitude
     fetch('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=52.52&longitude=13.41&current=us_aqi&forecast_days=1')

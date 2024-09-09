@@ -8,3 +8,4 @@ Steps to view this Project
   3. css folder has index.css file used to style my HTML page
   4. js folder has index.js file that uses dom to access HTML elements and Handle Events
   5. images folder has the images used in this project
+
